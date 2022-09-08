@@ -49,6 +49,7 @@
   "devDependencies": {
     "@sheerun/mutationobserver-shim": "0.3.3",
     "@testing-library/react": "^11.2.5",
+    "cross-env": "^7.0.3",
     "cypress": "^10.4.0",
     "cypress-multi-reporters": "^1.6.1",
     "eslint-config-trybe-frontend": "1.3.1",
