@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import fetchTrivia from '../services/fetchTrivia';
+import addToLocalStorage from '../services/storage';
 
 class Login extends Component {
   state = {
@@ -24,13 +26,16 @@ class Login extends Component {
     this.setState({ [name]: value }, this.loginValidators);
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
+    const { history } = this.props;
     event.preventDefault();
+    const { token } = await fetchTrivia();
+    addToLocalStorage(token);
+    history.push('/game');
   };
 
   render() {
     const { nome, email, isDisabled } = this.state;
-    console.log(isDisabled);
     return (
       <form onSubmit={ this.handleSubmit }>
         <label htmlFor="login">
