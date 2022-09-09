@@ -1,19 +1,20 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import fetchTrivia from '../services/fetchTrivia';
-import addToLocalStorage from '../services/storage';
+import md5 from 'crypto-js/md5';
+import fetchTrivia from '../services/fetchs/fetchTrivia';
+import { addToLocalStorage, addTokenLocalStorage } from '../services/storage';
 
 class Login extends Component {
   state = {
-    nome: '',
+    name: '',
     email: '',
     isDisabled: true,
   };
 
   loginValidators = () => {
-    const { nome, email } = this.state;
-    if (nome.length > 0 && email.length > 0) {
+    const { name, email } = this.state;
+    if (name.length > 0 && email.length > 0) {
       this.setState({
         isDisabled: false,
 
@@ -27,21 +28,32 @@ class Login extends Component {
   };
 
   handleSubmit = async (event) => {
-    const { history } = this.props;
     event.preventDefault();
+
+    const { history } = this.props;
     const { token } = await fetchTrivia();
-    addToLocalStorage(token);
+    const { name, email } = this.state;
+    const imgURL = `https://www.gravatar.com/avatar/${md5(email).toString()}`;
+    const ranking = [{ name, score: 0, picture: imgURL }];
+
+    addTokenLocalStorage(token);
+    addToLocalStorage('ranking', ranking);
     history.push('/game');
   };
 
+  handleClick = () => {
+    const { history } = this.props;
+    history.push('/settings');
+  };
+
   render() {
-    const { nome, email, isDisabled } = this.state;
+    const { name, email, isDisabled } = this.state;
     return (
       <form onSubmit={ this.handleSubmit }>
         <label htmlFor="login">
           <input
-            name="nome"
-            value={ nome }
+            name="name"
+            value={ name }
             type="text"
             id="login"
             placeholder="Seu Nome"
@@ -72,15 +84,23 @@ class Login extends Component {
           Play
         </button>
 
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ this.handleClick }
+        >
+          Configurações
+        </button>
+
       </form>
     );
   }
 }
 
 Login.propTypes = {
-  nome: PropTypes.string,
-  email: PropTypes.string,
-  isDisabled: PropTypes.bool,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }),
 }.isRequired;
 
 export default connect()(Login);
