@@ -28,6 +28,11 @@ class Login extends Component {
     event.preventDefault();
   };
 
+  handleClick = () => {
+    const { history } = this.props;
+    history.push('/settings');
+  };
+
   render() {
     const { nome, email, isDisabled } = this.state;
     console.log(isDisabled);
@@ -65,6 +70,14 @@ class Login extends Component {
           data-testid="btn-play"
         >
           Play
+        </button>
+
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ this.handleClick }
+        >
+          Configurações
         </button>
 
       </form>
