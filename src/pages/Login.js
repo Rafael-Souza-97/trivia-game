@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import fetchTrivia from '../services/fetchs/fetchTrivia';
-import { addToLocalStorage } from '../services/storage';
+import { addToLocalStorage, addTokenLocalStorage } from '../services/storage';
 
 class Login extends Component {
   state = {
@@ -36,8 +36,8 @@ class Login extends Component {
     const imgURL = `https://www.gravatar.com/avatar/${md5(email).toString()}`;
     const ranking = [{ name, score: 0, picture: imgURL }];
 
+    addTokenLocalStorage(token);
     addToLocalStorage('ranking', ranking);
-    addToLocalStorage('token', token);
     history.push('/game');
   };
 
