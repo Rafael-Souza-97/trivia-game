@@ -37,7 +37,6 @@ class Game extends React.Component {
 
   render() {
     const { firstResult, answers, wrongAnswers } = this.state;
-
     return (
       <div>
         <Header />
