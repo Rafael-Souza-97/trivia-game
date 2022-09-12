@@ -16,6 +16,7 @@ export default class Questions extends Component {
       easy: 1,
       medium: 2,
       hard: 3,
+      nextButton: false,
     };
   }
 
@@ -23,7 +24,7 @@ export default class Questions extends Component {
 
   getAnswer = ({ target: { id, name } }) => {
     if (name === 'correct') this.setScore(id);
-    this.setState({ hasAnswer: true });
+    this.setState({ hasAnswer: true, nextButton: true });
   };
 
   setScore = (currentCountDonw) => {
@@ -61,7 +62,7 @@ export default class Questions extends Component {
   };
 
   render() {
-    const { hasAnswer, isDisabled, coutdown } = this.state;
+    const { hasAnswer, isDisabled, coutdown, nextButton } = this.state;
     const { firstResult: { category, question }, wrongAnswers, answers } = this.props;
 
     return (
@@ -106,8 +107,13 @@ export default class Questions extends Component {
           ))}
           <button type="button" onClick={ this.nextQuestion }>Next</button>
         </div>
-      </section>
 
+        <div>
+          {
+            nextButton && <button type="button" data-testid="btn-next"> Next </button>
+          }
+        </div>
+      </section>
     );
   }
 }
