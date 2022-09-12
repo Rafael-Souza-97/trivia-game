@@ -8,13 +8,30 @@ export default class Questions extends Component {
 
     this.state = {
       hasAnswer: false,
+      timer: 30000,
+      isDisabled: false,
     };
   }
 
-  handleClick = () => this.setState(({ hasAnswer }) => ({ hasAnswer: !hasAnswer }));
+  componentDidMount() { this.setTimer(); }
+
+  getAnswer = () => this.setState({ hasAnswer: true });
+
+  setTimer = () => {
+    const { timer } = this.state;
+    setTimeout(() => {
+      this.getAnswer();
+      this.setState({ isDisabled: true });
+    }, timer);
+  };
+
+  nextQuestion = () => {
+    this.setTimer();
+    // lembrar de manter a chamada do setTimer
+  };
 
   render() {
-    const { hasAnswer } = this.state;
+    const { hasAnswer, isDisabled } = this.state;
     const { firstResult: { category, question }, wrongAnswers, answers } = this.props;
 
     return (
@@ -28,26 +45,29 @@ export default class Questions extends Component {
           {answers.map((element, index) => (
             wrongAnswers.includes(element) ? (
               <button
-                className={ hasAnswer && 'wrong-answer' }
+                className={ hasAnswer ? 'wrong-answer' : '' }
                 type="button"
                 key={ index }
                 data-testid={ `wrong-answer-${index}` }
-                onClick={ this.handleClick }
+                disabled={ isDisabled }
+                onClick={ this.getAnswer }
               >
                 { element }
               </button>
             ) : (
               <button
-                className={ hasAnswer && 'correct-answer' }
+                className={ hasAnswer ? 'correct-answer' : '' }
                 type="button"
                 key={ index }
                 data-testid="correct-answer"
-                onClick={ this.handleClick }
+                disabled={ isDisabled }
+                onClick={ this.getAnswer }
               >
                 { element }
               </button>
             )
           ))}
+          <button type="button" onClick={ this.nextQuestion }>Next</button>
         </div>
       </section>
 
