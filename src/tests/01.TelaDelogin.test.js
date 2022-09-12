@@ -1,13 +1,13 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
 import fetchTrivia from '../services/fetchs/fetchTrivia';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import App from '../App';
 
-const EMAIL = 'trybe@teste.com';
-
 describe('Testa a tela de login', () => {
+  const emailTest = 'trybe@teste.com';
   it('Verifica se a tela de login contém os inputs necessários', () => {
     renderWithRouterAndRedux(<App />);
 
@@ -41,25 +41,21 @@ describe('Testa a tela de login', () => {
     expect(btn).toBeDisabled();
 
     userEvent.type(inputName, 'Tinoco');
-    userEvent.type(inputEmail, EMAIL);
+    userEvent.type(inputEmail, emailTest);
 
     expect(btn).not.toBeDisabled();
   });
 
   it('Verifica se ao clicar no botão Play, é redirecionado a rota /game', () => {
-    const { history } = renderWithRouterAndRedux(<App />);
+    renderWithRouterAndRedux(<App />);
 
     const btn = screen.getByRole('button', { name: 'Play' });
     const inputName = screen.getByPlaceholderText('Seu Nome');
     const inputEmail = screen.getByPlaceholderText('Seu Email');
 
     userEvent.type(inputName, 'Tinoco');
-    userEvent.type(inputEmail, EMAIL);
+    userEvent.type(inputEmail, emailTest);
     userEvent.click(btn);
-
-    const { location: { pathname } } = history;
-
-    console.log(pathname);
   });
 
   it('Verifica se a API é chamado ao clicar no botão de Play', async () => {
@@ -69,7 +65,7 @@ describe('Testa a tela de login', () => {
     const inputEmail = screen.getByPlaceholderText('Seu Email');
 
     userEvent.type(inputName, 'Tinoco');
-    userEvent.type(inputEmail, EMAIL);
+    userEvent.type(inputEmail, emailTest);
     userEvent.click(btn);
 
     await fetchTrivia();
