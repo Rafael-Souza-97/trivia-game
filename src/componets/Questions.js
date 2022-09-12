@@ -9,16 +9,30 @@ export default class Questions extends Component {
     this.state = {
       hasAnswer: false,
       nextButton: false,
+      timer: 30000,
+      isDisabled: false,
     };
   }
 
-  handleClick = () => this.setState(({
-    hasAnswer: true,
-    nextButton: true,
-  }));
+  componentDidMount() { this.setTimer(); }
+
+  getAnswer = () => this.setState({ hasAnswer: true, nextButton: true, });
+
+  setTimer = () => {
+    const { timer } = this.state;
+    setTimeout(() => {
+      this.getAnswer();
+      this.setState({ isDisabled: true });
+    }, timer);
+  };
+
+  nextQuestion = () => {
+    this.setTimer();
+    // lembrar de manter a chamada do setTimer
+  };
 
   render() {
-    const { hasAnswer, nextButton } = this.state;
+    const { hasAnswer, isDisabled, nextButton } = this.state;
     const { firstResult: { category, question }, wrongAnswers, answers } = this.props;
 
     return (
@@ -32,26 +46,29 @@ export default class Questions extends Component {
           {answers.map((element, index) => (
             wrongAnswers.includes(element) ? (
               <button
-                className={ hasAnswer ? 'wrong-answer' : null }
+                className={ hasAnswer ? 'wrong-answer' : '' }
                 type="button"
                 key={ index }
                 data-testid={ `wrong-answer-${index}` }
-                onClick={ this.handleClick }
+                disabled={ isDisabled }
+                onClick={ this.getAnswer }
               >
                 { element }
               </button>
             ) : (
               <button
-                className={ hasAnswer ? 'correct-answer' : null }
+                className={ hasAnswer ? 'correct-answer' : '' }
                 type="button"
                 key={ index }
                 data-testid="correct-answer"
-                onClick={ this.handleClick }
+                disabled={ isDisabled }
+                onClick={ this.getAnswer }
               >
                 { element }
               </button>
             )
           ))}
+          <button type="button" onClick={ this.nextQuestion }>Next</button>
         </div>
 
         <div>
