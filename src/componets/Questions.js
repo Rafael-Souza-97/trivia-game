@@ -3,22 +3,32 @@ import PropTypes from 'prop-types';
 import './Questions.css';
 
 export default class Questions extends Component {
-  constructor() {
-    super();
+  state = {
+    hasAnswer: false,
+    nextButton: false,
+    timer: 30000,
+    isDisabled: false,
+  };
 
-    this.state = {
-      hasAnswer: false,
-      nextButton: false,
-    };
-  }
+  componentDidMount() { this.setTimer(); }
 
-  handleClick = () => this.setState(({
-    hasAnswer: true,
-    nextButton: true,
-  }));
+  getAnswer = () => this.setState({ hasAnswer: true, nextButton: true });
+
+  setTimer = () => {
+    const { timer } = this.state;
+    setTimeout(() => {
+      this.getAnswer();
+      this.setState({ isDisabled: true });
+    }, timer);
+  };
+
+  nextQuestion = () => {
+    this.setTimer();
+    // lembrar de manter a chamada do setTimer
+  };
 
   render() {
-    const { hasAnswer, nextButton } = this.state;
+    const { hasAnswer, isDisabled, nextButton } = this.state;
     const { firstResult: { category, question }, wrongAnswers, answers } = this.props;
 
     return (
@@ -32,26 +42,29 @@ export default class Questions extends Component {
           {answers.map((element, index) => (
             wrongAnswers.includes(element) ? (
               <button
-                className={ hasAnswer ? 'wrong-answer' : null }
+                className={ hasAnswer ? 'wrong-answer' : '' }
                 type="button"
                 key={ index }
                 data-testid={ `wrong-answer-${index}` }
-                onClick={ this.handleClick }
+                disabled={ isDisabled }
+                onClick={ this.getAnswer }
               >
                 { element }
               </button>
             ) : (
               <button
-                className={ hasAnswer ? 'correct-answer' : null }
+                className={ hasAnswer ? 'correct-answer' : '' }
                 type="button"
                 key={ index }
                 data-testid="correct-answer"
-                onClick={ this.handleClick }
+                disabled={ isDisabled }
+                onClick={ this.getAnswer }
               >
                 { element }
               </button>
             )
           ))}
+          <button type="button" onClick={ this.nextQuestion }>Next</button>
         </div>
 
         <div>
