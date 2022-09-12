@@ -3,19 +3,16 @@ import PropTypes from 'prop-types';
 import './Questions.css';
 
 export default class Questions extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      hasAnswer: false,
-      timer: 30000,
-      isDisabled: false,
-    };
-  }
+  state = {
+    hasAnswer: false,
+    nextButton: false,
+    timer: 30000,
+    isDisabled: false,
+  };
 
   componentDidMount() { this.setTimer(); }
 
-  getAnswer = () => this.setState({ hasAnswer: true });
+  getAnswer = () => this.setState({ hasAnswer: true, nextButton: true });
 
   setTimer = () => {
     const { timer } = this.state;
@@ -31,7 +28,7 @@ export default class Questions extends Component {
   };
 
   render() {
-    const { hasAnswer, isDisabled } = this.state;
+    const { hasAnswer, isDisabled, nextButton } = this.state;
     const { firstResult: { category, question }, wrongAnswers, answers } = this.props;
 
     return (
@@ -69,8 +66,13 @@ export default class Questions extends Component {
           ))}
           <button type="button" onClick={ this.nextQuestion }>Next</button>
         </div>
-      </section>
 
+        <div>
+          {
+            nextButton && <button type="button" data-testid="btn-next"> Next </button>
+          }
+        </div>
+      </section>
     );
   }
 }
