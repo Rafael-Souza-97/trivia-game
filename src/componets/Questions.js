@@ -73,7 +73,6 @@ export default class Questions extends Component {
           }
         </div>
       </section>
-
     );
   }
 }
