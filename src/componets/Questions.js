@@ -105,12 +105,19 @@ export default class Questions extends Component {
               </button>
             )
           ))}
-          <button type="button" onClick={ this.nextQuestion }>Next</button>
         </div>
 
         <div>
           {
-            nextButton && <button type="button" data-testid="btn-next"> Next </button>
+            nextButton && (
+              <button
+                type="button"
+                data-testid="btn-next"
+                onClick={ this.nextQuestion }
+              >
+                Next
+              </button>
+            )
           }
         </div>
       </section>
