@@ -20,17 +20,41 @@ class Feedback extends Component {
 
   render() {
     const { feedbackMessage } = this.state;
+    const { numberOfHits, score } = this.props;
     return (
       <div>
         <Header />
+        <p data-testid="feedback-total-score">{score}</p>
+        <p data-testid="feedback-total-question">{numberOfHits}</p>
         <p data-testid="feedback-text">{feedbackMessage}</p>
+        <button
+          data-testid="btn-play-again"
+          type="button"
+          onClick={ () => {
+            const { history } = this.props;
+            history.push('/');
+          } }
+        >
+          Play Again
+        </button>
+        <button
+          data-testid="btn-ranking"
+          type="button"
+          onClick={ () => {
+            const { history } = this.props;
+            history.push('/ranking');
+          } }
+        >
+          Ranking
+        </button>
       </div>
     );
   }
 }
 
 const mapStateToProps = () => (state) => ({
-  numberOfHits: state.player.numberOfHits,
+  numberOfHits: state.player.assertions,
+  score: state.player.score,
 });
 
 Feedback.propTypes = {
