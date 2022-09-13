@@ -2,10 +2,9 @@ import { UPDATE_NUMBER_OF_HITS, UPDATE_SCORE } from '../actions';
 
 const initalState = {
   name: '',
-  assertions: 0,
   score: 0,
   gravatarEmail: '',
-  numberOfHits: 0,
+  assertions: 0,
   indexOfResults: 0,
 };
 
@@ -15,7 +14,7 @@ function player(state = initalState, action) {
     ...state, score: state.score + action.score,
   };
   case UPDATE_NUMBER_OF_HITS: return {
-    ...state, numberOfHits: action.numberOfHits,
+    ...state, assertions: action.numberOfHits,
   };
   default:
     return state;
