@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import fetchTrivia from '../services/fetchs/fetchTrivia';
 import { addToLocalStorage, addTokenLocalStorage } from '../services/storage';
@@ -103,4 +102,4 @@ Login.propTypes = {
   }),
 }.isRequired;
 
-export default connect()(Login);
+export default Login;
