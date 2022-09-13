@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../componets/Header';
+import { addToLocalStorage, getFromLocalStorage } from '../services/storage';
 
 class Feedback extends Component {
   state = {
@@ -33,6 +34,11 @@ class Feedback extends Component {
           onClick={ () => {
             const { history } = this.props;
             history.push('/');
+            const currPlayer = getFromLocalStorage('ranking')[0];
+            const newRanking = getFromLocalStorage('ranking')
+              .filter(({ name }) => name !== currPlayer.name);
+            currPlayer.score = score;
+            addToLocalStorage('ranking', [currPlayer, ...newRanking]);
           } }
         >
           Play Again
@@ -43,6 +49,11 @@ class Feedback extends Component {
           onClick={ () => {
             const { history } = this.props;
             history.push('/ranking');
+            const currPlayer = getFromLocalStorage('ranking')[0];
+            const newRanking = getFromLocalStorage('ranking')
+              .filter(({ name }) => name !== currPlayer.name);
+            currPlayer.score = score;
+            addToLocalStorage('ranking', [currPlayer, ...newRanking]);
           } }
         >
           Ranking
