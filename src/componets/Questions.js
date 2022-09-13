@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Questions.css';
-import { updateScore } from '../redux/actions';
+import { connect } from 'react-redux';
+import { updateNumberOfHits, updateScore } from '../redux/actions';
 import store from '../redux/store';
 
-export default class Questions extends Component {
+class Questions extends Component {
   constructor() {
     super();
 
@@ -12,18 +13,24 @@ export default class Questions extends Component {
       hasAnswer: false,
       timer: 30000,
       isDisabled: false,
-      coutdown: 30,
+      countdown: 30,
       easy: 1,
       medium: 2,
       hard: 3,
       nextButton: false,
+      numberOfHits: 0,
     };
   }
 
-  componentDidMount() { this.setTimer(); }
+  componentDidMount() {
+    this.setTimer();
+  }
 
   getAnswer = ({ target: { id, name } }) => {
-    if (name === 'correct') this.setScore(id);
+    if (name === 'correct') {
+      this.setScore(id);
+      this.setState(({ numberOfHits }) => ({ numberOfHits: numberOfHits + 1 }));
+    }
     this.setState({ hasAnswer: true, nextButton: true });
   };
 
@@ -45,24 +52,36 @@ export default class Questions extends Component {
     dispatch(updateScore(newScore));
   };
 
-  setTimer = () => {
+  setTimer = (clear) => {
     const { timer } = this.state;
     const oneSecond = 1000;
     setTimeout(() => { // conta a cada 30 segundos.
-      this.setState({ isDisabled: true });
+      this.setState({ isDisabled: true, hasAnswer: true, nextButton: true });
     }, timer);
-    setInterval(() => { // conta a cada segundo diminui o estado do countdown.
-      this.setState(({ coutdown }) => ({ coutdown: coutdown - 1 }));
+
+    const myInterval = setInterval(() => {
+      this.setState(({ countdown }) => ({ countdown: countdown - 1 }));
     }, oneSecond);
+
+    if (clear) clearInterval(myInterval);
   };
 
   nextQuestion = () => {
-    this.setTimer();
-    // lembrar de manter a chamada do setTimer
+    const { numberOfHits } = this.state;
+    const { increaseIndex, indexOfResults, history } = this.props;
+    const numberOfQuestions = 4;
+
+    if (indexOfResults === numberOfQuestions) {
+      store.dispatch(updateNumberOfHits(numberOfHits));
+      history.push('/feedback');
+    }
+    this.setTimer('clear');
+    increaseIndex();
+    this.setState({ hasAnswer: false, countdown: 30, isDisabled: false });
   };
 
   render() {
-    const { hasAnswer, isDisabled, coutdown, nextButton } = this.state;
+    const { hasAnswer, isDisabled, countdown, nextButton } = this.state;
     const { firstResult: { category, question }, wrongAnswers, answers } = this.props;
 
     return (
@@ -70,7 +89,7 @@ export default class Questions extends Component {
         <div>
           <h1 data-testid="question-category">{ category }</h1>
           <span id="countdown">
-            { coutdown }
+            { countdown }
           </span>
           <h3 data-testid="question-text">{ question }</h3>
         </div>
@@ -82,7 +101,7 @@ export default class Questions extends Component {
                 className={ hasAnswer ? 'wrong-answer' : '' }
                 type="button"
                 key={ index }
-                id={ coutdown }
+                id={ countdown }
                 name="wrong"
                 data-testid={ `wrong-answer-${index}` }
                 disabled={ isDisabled }
@@ -95,7 +114,7 @@ export default class Questions extends Component {
                 className={ hasAnswer ? 'correct-answer' : '' }
                 type="button"
                 key={ index }
-                id={ coutdown }
+                id={ countdown }
                 name="correct"
                 data-testid="correct-answer"
                 disabled={ isDisabled }
@@ -129,3 +148,5 @@ Questions.propTypes = {
   firstAnswers: PropTypes.object,
   dispatch: PropTypes.func,
 }.isRequired;
+
+export default connect()(Questions);

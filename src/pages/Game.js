@@ -9,9 +9,15 @@ class Game extends React.Component {
     firstResult: [],
     answers: [],
     wrongAnswers: [],
+    indexOfResults: 0,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.validateGame();
+  }
+
+  validateGame = async () => {
+    const { indexOfResults } = this.state;
     const { history } = this.props;
     const invalidToken = 3;
     const questions = await fetchQuestions(localStorage.getItem('token'));
@@ -20,9 +26,17 @@ class Game extends React.Component {
       localStorage.removeItem('token');
       history.push('/');
     } else {
-      this.setState({ firstResult: questions.results[0] }, () => this.questionsResults());
+      this.setState({
+        firstResult: questions.results[indexOfResults],
+      }, () => this.questionsResults());
     }
-  }
+  };
+
+  increaseIndex = () => {
+    this.setState(({ indexOfResults }) => ({
+      indexOfResults: indexOfResults + 1,
+    }), () => this.validateGame());
+  };
 
   questionsResults() {
     const { firstResult } = this.state;
@@ -36,7 +50,8 @@ class Game extends React.Component {
   }
 
   render() {
-    const { firstResult, answers, wrongAnswers } = this.state;
+    const { firstResult, answers, wrongAnswers, indexOfResults } = this.state;
+    const { history } = this.props;
     return (
       <div>
         <Header />
@@ -44,6 +59,9 @@ class Game extends React.Component {
           answers={ answers }
           firstResult={ firstResult }
           wrongAnswers={ wrongAnswers }
+          indexOfResults={ indexOfResults }
+          increaseIndex={ this.increaseIndex }
+          history={ history }
         />
       </div>
     );
