@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import md5 from 'crypto-js/md5';
+import { connect } from 'react-redux';
 import fetchTrivia from '../services/fetchs/fetchTrivia';
-import { addToLocalStorage, addTokenLocalStorage } from '../services/storage';
+import { addToLocalStorage,
+  addTokenLocalStorage, getFromLocalStorage } from '../services/storage';
+import store from '../redux/store';
+import { resetScore } from '../redux/actions';
 
 class Login extends Component {
   state = {
@@ -10,6 +14,10 @@ class Login extends Component {
     email: '',
     isDisabled: true,
   };
+
+  componentDidMount() {
+    if (!getFromLocalStorage('ranking')) addToLocalStorage('ranking', []);
+  }
 
   loginValidators = () => {
     const { name, email } = this.state;
@@ -33,10 +41,17 @@ class Login extends Component {
     const { token } = await fetchTrivia();
     const { name, email } = this.state;
     const imgURL = `https://www.gravatar.com/avatar/${md5(email).toString()}`;
-    const ranking = [{ name, score: 0, picture: imgURL }];
+    const player = { name, score: 0, picture: imgURL };
+    const currRanking = getFromLocalStorage('ranking');
+    if (currRanking) {
+      addToLocalStorage('ranking', [player, ...currRanking]);
+    } else {
+      addToLocalStorage('ranking', [player]);
+    }
 
     addTokenLocalStorage(token);
-    addToLocalStorage('ranking', ranking);
+
+    store.dispatch(resetScore(0));
     history.push('/game');
   };
 
@@ -102,4 +117,4 @@ Login.propTypes = {
   }),
 }.isRequired;
 
-export default Login;
+export default connect()(Login);

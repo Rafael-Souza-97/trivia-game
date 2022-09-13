@@ -1,4 +1,4 @@
-import { UPDATE_NUMBER_OF_HITS, UPDATE_SCORE } from '../actions';
+import { RESET_SCORE, UPDATE_NUMBER_OF_HITS, UPDATE_SCORE } from '../actions';
 
 const initalState = {
   name: '',
@@ -12,6 +12,9 @@ function player(state = initalState, action) {
   switch (action.type) {
   case UPDATE_SCORE: return {
     ...state, score: state.score + action.score,
+  };
+  case RESET_SCORE: return {
+    ...state, score: action.newScore,
   };
   case UPDATE_NUMBER_OF_HITS: return {
     ...state, assertions: action.numberOfHits,
