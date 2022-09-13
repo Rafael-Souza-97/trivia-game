@@ -19,8 +19,8 @@ class Header extends Component {
     return (
       <div>
         <h1>Header</h1>
-        <p data-testid="header-player-name">{`Nome: ${name}`}</p>
-        <p data-testid="header-score">{`Placar: ${score + scoreFromRedux}`}</p>
+        <p data-testid="header-player-name">{name}</p>
+        <p data-testid="header-score">{score + scoreFromRedux}</p>
         <img data-testid="header-profile-picture" src={ picture } alt={ name } />
       </div>
     );
