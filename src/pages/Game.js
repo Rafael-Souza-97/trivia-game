@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import fetchQuestions from '../services/fetchs/fetchQuestions';
 import Header from '../componets/Header';
 import QuestionsComponent from '../componets/Questions';
+import '../styles/index.css'
 
 class Game extends React.Component {
   state = {
@@ -53,9 +54,10 @@ class Game extends React.Component {
     const { firstResult, answers, wrongAnswers, indexOfResults } = this.state;
     const { history } = this.props;
     return (
-      <div>
+      <div className='trivia-container'>
         <Header />
         <QuestionsComponent
+
           answers={ answers }
           firstResult={ firstResult }
           wrongAnswers={ wrongAnswers }

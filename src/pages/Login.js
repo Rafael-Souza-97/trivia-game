@@ -7,6 +7,8 @@ import { addToLocalStorage,
   addTokenLocalStorage, getFromLocalStorage } from '../services/storage';
 import store from '../redux/store';
 import { resetScore } from '../redux/actions';
+import triviaLogo from '../trivia.png'
+import '../styles/login.css'
 
 class Login extends Component {
   state = {
@@ -63,7 +65,10 @@ class Login extends Component {
   render() {
     const { name, email, isDisabled } = this.state;
     return (
-      <form onSubmit={ this.handleSubmit }>
+      <form onSubmit={ this.handleSubmit } className="login-container" >
+        
+        <img src={triviaLogo} alt="trivia-logo" className='logo'></img>
+
         <label htmlFor="login">
           <input
             name="name"
@@ -89,7 +94,7 @@ class Login extends Component {
           />
 
         </label>
-
+      <div className='button-container'>
         <button
           disabled={ isDisabled }
           type="submit"
@@ -99,12 +104,15 @@ class Login extends Component {
         </button>
 
         <button
+          className='config'
           type="button"
           data-testid="btn-settings"
           onClick={ this.handleClick }
         >
           Configurações
         </button>
+      </div>
+
 
       </form>
     );

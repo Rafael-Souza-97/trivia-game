@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Header from '../componets/Header';
 import { addToLocalStorage, getFromLocalStorage } from '../services/storage';
+import '../styles/index.css'
 
 class Feedback extends Component {
   state = {
@@ -23,10 +23,9 @@ class Feedback extends Component {
     const { feedbackMessage } = this.state;
     const { numberOfHits, score } = this.props;
     return (
-      <div>
-        <Header />
-        <p data-testid="feedback-total-score">{score}</p>
-        <p data-testid="feedback-total-question">{numberOfHits}</p>
+      <div className='trivia-container'>
+        <p data-testid="feedback-total-score">Pontuação Final: {score}</p>
+        <p data-testid="feedback-total-question">Total de Acertos: {numberOfHits}</p>
         <p data-testid="feedback-text">{feedbackMessage}</p>
         <button
           data-testid="btn-play-again"

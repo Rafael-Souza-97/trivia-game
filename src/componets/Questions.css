@@ -1,11 +1,64 @@
+.normal-button {
+  width: 175px;
+  background-color: #6e6e6e;
+  color: white;
+  padding: 15px;
+  margin: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.normal-button:active{
+  background-color: #2800c9;
+}
+
+.normal-button:hover {
+  background-color: #040085;
+}
+
 .wrong-answer {
   background-color: red;
   border: 3px solid red;
   color: white;
+  padding: 15px;
+  margin: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
 }
 
 .correct-answer {
   background-color: rgb(6, 240, 15);
   border: 3px solid rgb(6, 240, 15);
-  color: white;
+  color: rgb(0, 0, 0);
+  padding: 15px;
+  margin: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
 }
+
+.next {
+  width: 300px;
+  background-color: #1500d0;
+  color: white;
+  padding: 15px;
+  margin-top: 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.next:active{
+  background-color: #2800c9;
+}
+
+.next:hover {
+  background-color: #040085;
+}
+

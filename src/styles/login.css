@@ -1,0 +1,111 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+}
+
+.login-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  text-align: center;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 50px 20px;
+}
+
+@media (max-width: 600px) {
+  .login-container {
+    padding: 40px 10px;
+  }
+}
+
+h1 {
+  color: #333;
+  font-size: 32px;
+  margin: 20px 0;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 24px;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 370px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+@media (max-width: 600px) {
+  input[type="text"],
+  input[type="email"] {
+    width: 250px;
+  }
+}
+
+.button-container {
+  display: flex;
+}
+
+button[type="submit"] {
+  width: 175px;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  button[type="submit"] {
+    width: 100px;
+  }
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.config {
+  width: 175px;
+  background-color: #1b00b4;
+  color: white;
+  padding: 15px;
+  margin: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  .config {
+    width: 130px;
+  }
+}
+
+.config:hover {
+  background-color: #1500ff;
+}
+
+.logo {
+  width: 200px;
+  margin: 25px;
+}

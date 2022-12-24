@@ -14,14 +14,13 @@ class Header extends Component {
 
   render() {
     const { ranking } = this.state;
-    const { name, picture } = ranking[0];
+    const { name } = ranking[0];
     const { scoreFromRedux } = this.props;
     return (
       <div>
-        <h1>Header</h1>
-        <p data-testid="header-player-name">{name}</p>
-        <p data-testid="header-score">{scoreFromRedux}</p>
-        <img data-testid="header-profile-picture" src={ picture } alt={ name } />
+        <p data-testid="header-player-name">Olá, {name}!</p>
+        <p data-testid="header-score">Sua pontuação: {scoreFromRedux}</p>
+        {/* <img data-testid="header-profile-picture" src={ picture } alt={ name } /> */}
       </div>
     );
   }

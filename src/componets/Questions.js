@@ -77,7 +77,7 @@ class Questions extends Component {
     }
     this.setTimer('clear');
     increaseIndex();
-    this.setState({ hasAnswer: false, countdown: 30, isDisabled: false });
+    this.setState({ hasAnswer: false, countdown: 30, isDisabled: false, nextButton: false });
   };
 
   render() {
@@ -98,7 +98,7 @@ class Questions extends Component {
           {answers.map((element, index) => (
             wrongAnswers.includes(element) ? (
               <button
-                className={ hasAnswer ? 'wrong-answer' : '' }
+                className={ hasAnswer ? 'wrong-answer' : 'normal-button' }
                 type="button"
                 key={ index }
                 id={ countdown }
@@ -111,7 +111,7 @@ class Questions extends Component {
               </button>
             ) : (
               <button
-                className={ hasAnswer ? 'correct-answer' : '' }
+                className={ hasAnswer ? 'correct-answer' : 'normal-button' }
                 type="button"
                 key={ index }
                 id={ countdown }
@@ -130,6 +130,7 @@ class Questions extends Component {
           {
             nextButton && (
               <button
+                className='next'
                 type="button"
                 data-testid="btn-next"
                 onClick={ this.nextQuestion }
