@@ -72,6 +72,7 @@ Abra [http://localhost:3000](http://localhost:3000) no seu navegador para visual
 ## Referências
 
  - [Trybe](https://www.betrybe.com/)
+ - [Gravatar](https://pt.gravatar.com/)
 
 ## Tecnologias / Ferramentas utilizadas
 
