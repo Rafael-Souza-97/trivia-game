@@ -53,9 +53,14 @@ Abra [http://localhost:3000](http://localhost:3000) no seu navegador para visual
 </details>
 
 
-## Autor
+## Autores
 
+- [Elias Ferreira](https://github.com/eliasef)
+- [Lucas Rodrigues](https://github.com/lucasrodrigges)
+- [Majjin](https://github.com/majjin)
+- [Marlon Tinoco](https://github.com/eutinoco)
 - [Rafael Souza](https://github.com/Rafael-Souza-97)
+- [Vitor Lichoti](https://github.com/vitorlichoti)
 
 ## Referências
 
